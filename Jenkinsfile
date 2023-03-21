@@ -9,14 +9,14 @@ pipeline {
 
     stage('stage2') {
       steps {
-        sh '''find / -user ubuntu 
+        sh '''sudo find / -user ubuntu -print
 '''
       }
     }
 
     stage('stage3') {
       steps {
-        sh '''find / -user ubuntu -printf "%p %s %i\\n" 
+        sh '''sudo find / -user ubuntu -printf "%p %s %i\\n" 
 '''
       }
     }
