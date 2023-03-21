@@ -9,14 +9,14 @@ pipeline {
 
     stage('stage2') {
       steps {
-        sh '''find / -user ubuntu -print 2>/dev/null
+        sh '''find / -user ubuntu 
 '''
       }
     }
 
     stage('stage3') {
       steps {
-        sh '''find / -user ubuntu -printf "%p %s %i\\n" 2>/dev/null
+        sh '''find / -user ubuntu -printf "%p %s %i\\n" 
 '''
       }
     }
