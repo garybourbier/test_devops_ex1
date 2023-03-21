@@ -4,7 +4,7 @@ pipeline {
     stage('Check if user exists') {
       steps {
         script {
-          sh 'id -u user &> /dev/null'
+          sh 'id -u ubuntu &> /dev/null'
           if (returnStatus == 0) {
             echo 'User exists'
           } else {
@@ -18,7 +18,7 @@ pipeline {
     stage('Find files owned by user') {
       steps {
         script {
-          sh 'find / -user user -print 2>/dev/null > files.txt'
+          sh 'find / -user ubuntu -print 2>/dev/null > files.txt'
           sh 'cat files.txt'
         }
 
@@ -28,7 +28,7 @@ pipeline {
     stage('Display file sizes and inodes') {
       steps {
         script {
-          sh 'find / -user user -printf "%p %s %i\n" 2>/dev/null > file_info.txt'
+          sh 'find / -user ubuntu -printf "%p %s %i\n" 2>/dev/null > file_info.txt'
           sh 'cat file_info.txt'
         }
 
