@@ -1,39 +1,17 @@
 pipeline {
-  agent any
-  stages {
-    stage('Check if user exists') {
-      steps {
-        script {
-          sh 'id -u ubuntu &> /dev/null'
-          if (returnStatus == 0) {
-            echo 'User exists'
-          } else {
-            error 'User does not exist'
-          }
+    agent any
+    stages {
+        stage('Check User') {
+            steps {
+                script {
+                    def userExists = sh(returnStatus: true, script: 'id -u ubuntu >/dev/null 2>&1').exitStatus == 0
+                    if (userExists) {
+                        sh 'find / -type f -user ubuntu -printf "%s %i %p\n"'
+                    } else {
+                        error 'User "ubuntu" does not exist'
+                    }
+                }
+            }
         }
-
-      }
     }
-
-    stage('Find files owned by user') {
-      steps {
-        script {
-          sh 'find / -user ubuntu -print 2>/dev/null > files.txt'
-          sh 'cat files.txt'
-        }
-
-      }
-    }
-
-    stage('Display file sizes and inodes') {
-      steps {
-        script {
-          sh 'find / -user ubuntu -printf "%p %s %i\n" 2>/dev/null > file_info.txt'
-          sh 'cat file_info.txt'
-        }
-
-      }
-    }
-
-  }
 }
